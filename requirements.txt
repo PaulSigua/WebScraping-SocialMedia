@@ -7,3 +7,6 @@ pandas
 fastapi
 uvicorn
 python-dotenv
+langdetect
+nltk
+google-api-python-client

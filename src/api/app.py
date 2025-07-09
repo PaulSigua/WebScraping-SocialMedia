@@ -4,7 +4,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from fastapi import FastAPI
 import uvicorn
-from services.scraping import main
+from services.scraping_x import main
+from services.scraping_tiktok import main_tiktok
+from services.scraping_face import main_facebook
 
 app = FastAPI(
     title="Web Scraping API",
@@ -26,10 +28,17 @@ async def read_root():
     """
     return {"message": "Welcome to the Web Scraping API!"}
 
-@app.get("/scrape", tags=["web_scraping"], description="Scrape a webpage")
-def scrape_webpage():
-    main(5,3)
+@app.get("/scrape-x", tags=["web_scraping"], description="Scrape a webpage")
+def scrape_webpage_x():
+    main(100,5)
     
+@app.get("/scrape-tik-tok", tags=["web_scraping"], description="Scrape a webpage")
+def scrape_webpage_tiktok():
+    main_tiktok()
+        
+@app.get("/scrape-facebook", tags=["web_scraping"], description="Scrape a webpage")
+def scrape_webpage_facebook():
+    main_facebook()
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=9999, reload=True)
