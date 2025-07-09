@@ -3,9 +3,8 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from fastapi import FastAPI
-import uvicorn, time
-from services.driver import get_chrome_driver
-from services.scraping import open_twitter_login, go_to_explore, search_keyword, extract_tweet_texts
+import uvicorn
+from services.scraping import main
 
 app = FastAPI(
     title="Web Scraping API",
@@ -29,13 +28,8 @@ async def read_root():
 
 @app.get("/scrape", tags=["web_scraping"], description="Scrape a webpage")
 def scrape_webpage():
-    driver_ = get_chrome_driver()
-    driver = open_twitter_login(driver_)
-    time.sleep(2)
-    go_to_explore(driver)
-    search_keyword(driver,"mundial de clubes")
-    extract_tweet_texts(driver, 10)
+    main(5,3)
     
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="127.0.0.1", port=9999)
+    uvicorn.run("app:app", host="127.0.0.1", port=9999, reload=True)
